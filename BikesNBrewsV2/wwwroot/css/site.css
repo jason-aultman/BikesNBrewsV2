@@ -1,0 +1,59 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+  background-color: #f3e39f;
+}
+nav{
+
+}
+header{
+    background-color: #ebc341;
+}
+.img-bike{
+    width: 30%;
+    float: left;
+    margin-right: 10px;
+    border-radius: 25%;
+}
+.img-beer{
+    width: 30%;
+    float: right;
+    margin-left: 10px;
+    border-radius: 25%;
+}
+.front-intro{
+    width: 70%;
+    margin: 40px auto 80px auto;
+    text-align: left;
+    font-weight: normal;
+    line-height: 2;
+}
+hr{
+    width: 25%;
+    border: dotted 10px brown;
+    border-top: 0px;
+    background-color: transparent;
+    margin: auto auto 60px auto;
+
+}
+h1{
+    font-family: serif;
+    color: #6a4507;
+}
+.navbar {
+    background-color: #f3e39f;
+}

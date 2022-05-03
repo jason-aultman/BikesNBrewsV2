@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Bikes and Beers v2.0</h1>
+     <hr />
+
+     <div class="front-intro">
+        <h4>
+            <img  class="img-bike" src="https://images.unsplash.com/photo-1511994298241-608e28f14fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80" />
+            A website created for anyone who has a love for nature, fitness, and cycling, who also has a love for great craft beers.  Does this sound like you?
+            If so, then my friend you are in the right place.
+        </h4>  
+        <h4>
+           <img class="img-beer" src="https://thumbs.dreamstime.com/z/mug-beer-wooden-table-32826007.jpg" />
+            So go ahead, enter the site, enter a zip code and let us plan a trip that you will love.  At the end of your trip leave a review for others.  Make some friends, have a drink, and enjoy your day.
+        </h4>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+@*                @Html.ActionLink("Enter", null, new {@class="btn btn-dark btn-lg"})
+*@                <a class="btn btn-dark btn-lg" href="/Breweries/Index"><i class = "fa-solid fa-beer-mug-empty"></i> Enter</a>
+@*                <button class="btn btn-dark btn-lg"><i class="fa-solid fa-beer-mug-empty"></i> @Html.ActionLink("Enter","Index","Breweries",null,"btn btn-dark") </button>
+*@            </div>
+        </div>
+    </div>
+</div>
+   
