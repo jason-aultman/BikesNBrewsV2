@@ -1,5 +1,6 @@
 ﻿using BikesNBrewsV2.Data;
 using BikesNBrewsV2.Models;
+using BikesNBrewsV2.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -11,14 +12,11 @@ namespace BikesNBrewsV2.Controllers
     public class BreweriesController : Controller
     {
         private ApplicationDbContext _context;
-        private HttpClient _httpClient;
-        private JsonSerializerOptions _options;
-        public BreweriesController(ApplicationDbContext context)
+        private IBrewData _brewData;
+        public BreweriesController(ApplicationDbContext context, IBrewData brew)
         {
             _context = context;
-            _httpClient = new HttpClient() { BaseAddress=new Uri("https://api.openbrewerydb.org/") };
-            _options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
-            
+            _brewData = brew;
         }
         // GET: BreweriesController
         public ActionResult Index()
@@ -27,32 +25,16 @@ namespace BikesNBrewsV2.Controllers
         }
         public ActionResult GetByZip(string Zip, string Address, string City, string State)
         {
-            HttpResponseMessage request = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
-            string requestString;
-            List<Brewery> serialized = new List<Brewery>();
-
-            var standardizedCity = City.Replace(' ', '_');
-            if (Zip != null)
+            var breweries = new List<Brewery>();
+            if(City!=null && State!=null)
             {
-                request = _httpClient.GetAsync($"breweries?by_postal={Zip}&per_page=50").Result;
+                breweries = _brewData.GetBreweriesByCityState(City, State);
             }
-            else if (City != null && State !=null)
+            else if ((City == null || State == null)&& Zip!=null)
             {
-                request = _httpClient.GetAsync($"breweries?by_city={standardizedCity}&by_state={State}&per_page=50").Result;
-
+                breweries = _brewData.GetBreweriesByZip(Zip);
             }
-            else { }
-            if(request.StatusCode==System.Net.HttpStatusCode.OK)
-            {
-                requestString = request.Content.ReadAsStringAsync().Result;
-                serialized = JsonSerializer.Deserialize<List<Brewery>>(requestString, _options);
-
-            }
-            //  var serialized = JsonConvert.DeserializeObject<List<Brewery>>(requestString);
-            var sList = new List<Brewery>();
-            var bvm = new BrewViewModel() { Brewery = new Brewery(), Breweries = serialized };
-            var currentUser = _context.Users.Where((_ => _.Email == HttpContext.User.Identity.Name)).SingleOrDefault();
-            
+            var bvm = new BrewViewModel() { Breweries = breweries, Brewery = new Brewery() };
             
             return View("Index", bvm);
         }

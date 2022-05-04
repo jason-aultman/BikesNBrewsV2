@@ -2,7 +2,7 @@
 
 namespace BikesNBrewsV2.Models
 {
-    // Root myDeserializedClass = JsonSerializer.Deserialize<Root>(myJsonResponse);
+    
     public class Brewery
     {
         [JsonPropertyName("id")]
@@ -18,10 +18,10 @@ namespace BikesNBrewsV2.Models
         public string Street { get; set; }
 
         [JsonPropertyName("address_2")]
-        public object Address2 { get; set; }
+        public string? Address2 { get; set; }
 
         [JsonPropertyName("address_3")]
-        public object Address3 { get; set; }
+        public string? Address3 { get; set; }
 
         [JsonPropertyName("city")]
         public string City { get; set; }
@@ -30,7 +30,7 @@ namespace BikesNBrewsV2.Models
         public string State { get; set; }
 
         [JsonPropertyName("county_province")]
-        public object CountyProvince { get; set; }
+        public string? CountyProvince { get; set; }
 
         [JsonPropertyName("postal_code")]
         public string PostalCode { get; set; }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using BikesNBrewsV2.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BikesNBrewsV2.Data
@@ -9,5 +10,7 @@ namespace BikesNBrewsV2.Data
             : base(options)
         {
         }
+
+        public DbSet<Brewery> Breweries { get; set; }    
     }
 }
