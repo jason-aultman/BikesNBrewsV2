@@ -5,5 +5,6 @@ public interface IBrewData
 {
     public List<Brewery> GetBreweriesByZip(string Zip);
     public List<Brewery> GetBreweriesByCityState(string City, string State);
+    public List<Brewery> GetBreweriesWithInRange(Coordinate coordinate, double Miles);
     
 }

@@ -60,5 +60,27 @@ namespace BikesNBrewsV2.Services
             return serialized;
 
         }
+
+        List<Brewery> IBrewData.GetBreweriesWithInRange(Coordinate coordinate, double Miles)
+        {
+            HttpResponseMessage request = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
+            string requestString;
+            List<Brewery> serialized = new List<Brewery>();
+
+            if (coordinate != null && Miles>0)
+            {
+                request = _httpClient.GetAsync($"breweries?by_dist={coordinate.Latitude},{coordinate.Longitude}").Result;
+            }
+            if (request.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                requestString = request.Content.ReadAsStringAsync().Result;
+                serialized = JsonSerializer.Deserialize<List<Brewery>>(requestString, _options);
+
+            }
+            var sList = new List<Brewery>();
+            // var bvm = new BrewViewModel() { Brewery = new Brewery(), Breweries = serialized };
+            return serialized;
+
+        }
     }
 }

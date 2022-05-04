@@ -14,6 +14,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddScoped<IBrewData, BrewData>();
+builder.Services.AddScoped<IGeoCachable, GeoLocation>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

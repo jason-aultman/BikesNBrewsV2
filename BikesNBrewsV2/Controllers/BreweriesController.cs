@@ -13,10 +13,12 @@ namespace BikesNBrewsV2.Controllers
     {
         private ApplicationDbContext _context;
         private IBrewData _brewData;
-        public BreweriesController(ApplicationDbContext context, IBrewData brew)
+        private IGeoCachable _gCache;
+        public BreweriesController(ApplicationDbContext context, IBrewData brew, IGeoCachable geoCachable)
         {
             _context = context;
             _brewData = brew;
+            _gCache = geoCachable;
         }
         // GET: BreweriesController
         public ActionResult Index()
@@ -26,7 +28,11 @@ namespace BikesNBrewsV2.Controllers
         public ActionResult GetByZip(string Zip, string Address, string City, string State)
         {
             var breweries = new List<Brewery>();
-            if(City!=null && State!=null)
+            if(Address!=null && City!=null && State!=null)
+            {
+                breweries= _brewData.GetBreweriesWithInRange(_gCache.GetCoordinates(Address, City, State, Zip), 50.0);
+            }
+            else if(City!=null && State!=null)
             {
                 breweries = _brewData.GetBreweriesByCityState(City, State);
             }
@@ -35,7 +41,11 @@ namespace BikesNBrewsV2.Controllers
                 breweries = _brewData.GetBreweriesByZip(Zip);
             }
             var bvm = new BrewViewModel() { Breweries = breweries, Brewery = new Brewery() };
-            
+            if (breweries ==null)
+            {
+                return NotFound();
+            }
+
             return View("Index", bvm);
         }
         public ActionResult GetZip()
